@@ -1,0 +1,4 @@
+ninja-syntax>=1.7.2
+pygit2
+six
+

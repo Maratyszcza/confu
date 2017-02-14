@@ -1,0 +1,9 @@
+name: googlebenchmark
+title: Google micro-Benchmark framework
+license: Apache 2.0
+platforms:
+  unsupported:
+    - x86_64-nacl-gnu
+    - pnacl-nacl-newlib
+    - wasm32-emscripten
+    - asmjs-emscripten
