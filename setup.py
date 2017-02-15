@@ -14,6 +14,7 @@ setup(
     keywords=["build", "ninja"],
     maintainer=__maintainer__,
     maintainer_email=__email__,
+    package_data={"confu.recipes": ["*.yaml"]},
     requires=[],
     classifiers=[
         "Development Status :: 1 - Planning",
