@@ -2,8 +2,8 @@
 
 
 def setup(root_dir):
-    import pygit2
-    repo = pygit2.clone_repository("https://github.com/google/googletest.git", root_dir)
+    import confu.git
+    repo = confu.git.clone("https://github.com/google/googletest.git", root_dir)
     repo.checkout("refs/tags/release-1.8.0")
 
     from os import path

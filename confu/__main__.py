@@ -52,7 +52,8 @@ def setup_deps(options, unparsed_args):
             elif dep.url is not None:
                 logger.info("fetch dependency {name} from {url}".format(
                     name=qualified_name, url=dep.url))
-                pygit2.clone_repository(dep.url, dep_dir)
+                import confu.git
+                confu.git.clone(dep.url, dep_dir)
             elif dep.name in builtin_recipes:
                 logger.info("setup dependency {name} using built-in recipe confu.recipes.{name}"
                     .format(name=qualified_name))
