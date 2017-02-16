@@ -24,7 +24,7 @@ function install_ninja() {
 	then
 		rm -f "$DOWNLOAD_DIR/ninja.tgz"
 	fi
-	wget "$NINJA_URL" -O "$DOWNLOAD_DIR/ninja.tgz"
+	wget --no-check-certificate "$NINJA_URL" -O "$DOWNLOAD_DIR/ninja.tgz"
 	if [ -d "$NINJA_DIR" ]
 	then
 		rm -rf "$NINJA_DIR"
@@ -44,7 +44,7 @@ function build_cmake() {
 	then
 		rm -f "$DOWNLOAD_DIR/cmake.tgz"
 	fi
-	wget "$CMAKE_URL" -O "$DOWNLOAD_DIR/cmake.tgz"
+	wget --no-check-certificate "$CMAKE_URL" -O "$DOWNLOAD_DIR/cmake.tgz"
 	if [ -d "$CMAKE_DIR" ]
 	then
 		rm -rf "$CMAKE_DIR"
@@ -64,7 +64,7 @@ function build_libssl() {
 	then
 		rm -f "$DOWNLOAD_DIR/libssl.tgz"
 	fi
-	wget "$LIBSSL_URL" -O "$DOWNLOAD_DIR/libssl.tgz"
+	wget --no-check-certificate "$LIBSSL_URL" -O "$DOWNLOAD_DIR/libssl.tgz"
 	if [ -d "$LIBSSL_DIR" ]
 	then
 		rm -rf "$LIBSSL_DIR"
@@ -85,7 +85,7 @@ function build_libgit2() {
 	then
 		rm -f "$DOWNLOAD_DIR/libgit2.tgz"
 	fi
-	wget "$LIBGIT2_URL" -O "$DOWNLOAD_DIR/libgit2.tgz"
+	wget --no-check-certificate "$LIBGIT2_URL" -O "$DOWNLOAD_DIR/libgit2.tgz"
 	if [ -d "$LIBGIT2_DIR" ]
 	then
 		rm -rf "$LIBGIT2_DIR"
