@@ -94,9 +94,11 @@ function build_libgit2() {
 	tar xf "$DOWNLOAD_DIR/libgit2.tgz" -C "$LIBGIT2_DIR" --strip-components=1
 	mkdir -p "$LIBGIT2_DIR/build"
 	pushd "$LIBGIT2_DIR/build"
-	CMAKE_LIBRARY_PATH="$LIBGIT2_DIR/install/include:$LIBGIT2_DIR/install/lib" "$CMAKE_DIR/install/bin/cmake" -G Ninja \
-		"-DCMAKE_INSTALL_PREFIX=$LIBGIT2_DIR/install" \
+	"$CMAKE_DIR/install/bin/cmake" -G Ninja \
+		"-DCMAKE_LIBRARY_PATH=$LIBSSL_DIR/install/include:$LIBSSL_DIR/install/lib" \
+		"-DCMAKE_INSTALL_PREFIX=$LIBGIT2_DIR/install" "-DCMAKE_MAKE_PROGRAM=$NINJA_DIR/ninja"  \
 		-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DBUILD_CLAR=OFF \
+		"-DOPENSSL_ROOT_DIR=$LIBSSL_DIR/install" \
 		"-DOPENSSL_SSL_LIBRARY=$LIBSSL_DIR/install/lib/libssl.a" \
 		"-DOPENSSL_CRYPTO_LIBRARY=$LIBSSL_DIR/install/lib/libcrypto.a" ..
 	"$HOME/.local/bin/ninja"
@@ -108,7 +110,7 @@ function build_libgit2() {
 }
 
 function install_pygit2() {
-	LIBGIT2="$LIBGIT2_DIR/install" LDFLAGS="-Wl,-rpath,$HOME/.local/lib,--enable-new-dtags" pip install --user --upgrade --no-binary --no-cache-dir --ignore-installed --force-reinstall pygit2==0.25.0
+	LIBGIT2="$LIBGIT2_DIR/install" LDFLAGS="-Wl,-rpath,$HOME/.local/lib,--enable-new-dtags" pip install --user --upgrade --ignore-installed --force-reinstall pygit2==0.25.0
 	python -c "import pygit2"
 }
 
