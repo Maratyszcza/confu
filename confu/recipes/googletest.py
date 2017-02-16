@@ -20,13 +20,16 @@ def main(args, root_dir=None):
     options = confu.standard_parser("Google Test framework configuration script").parse_args(args)
     build = confu.Build.from_options(options, root_dir=root_dir)
 
-    build.export_cpath("googletest/include", ["gtest/**/*.h"])
+    with build.options(source_dir="googletest/src", include_dirs=["googletest/include", "googletest"]):
+        gtest_object = build.cxx("gtest-all.cc")
 
-    with build.options(source_dir="googletest/src", extra_include_dirs=["googletest"]):
-        build.static_library("googletest",
-            [build.cxx("gtest-all.cc"), build.cxx("gtest_main.cc")])
+        with build.modules.default:
+            build.export_cpath("googletest/include", ["gtest/**/*.h"])
+            build.static_library("googletest",
+                [gtest_object, build.cxx("gtest_main.cc")])
 
-    # with config.project("core"):
-    #     config.static_library("googletest-core", config.cxx("gtest.cc"))
+        with build.modules.core:
+            build.export_cpath("googletest/include", ["gtest/**/*.h"])
+            build.static_library("googletest-core", gtest_object)
 
     return build
