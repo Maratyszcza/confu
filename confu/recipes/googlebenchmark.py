@@ -39,7 +39,7 @@ def main(args, root_dir=None):
     ]
 
     macros = [
-        "HAVE_STD_REGEX",
+        "HAVE_POSIX_REGEX",
         "NDEBUG",
     ]
     with build.options(source_dir="src", macros=macros, extra_include_dirs="src"):
