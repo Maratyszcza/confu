@@ -67,7 +67,7 @@ class UnixToolchain(Toolchain):
                        emscripten_flags=emscripten_linker_flags),
                        description="LINK $path")
 
-        ninja.rule("archive", "rm -f $out & $ar rcs $out $in",
+        ninja.rule("archive", "$ar rcs $out $in",
                    description="AR $path")
 
         if write_run:
