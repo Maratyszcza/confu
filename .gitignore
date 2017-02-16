@@ -10,6 +10,7 @@ build.ninja
 confu.egg-info/
 dist/
 docs/
+build/
 *.pyc
 *.pyo
 
