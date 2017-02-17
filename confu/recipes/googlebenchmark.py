@@ -4,7 +4,6 @@
 def setup(root_dir):
     import confu.git
     repo = confu.git.clone("https://github.com/google/benchmark.git", root_dir)
-    repo.checkout("refs/tags/v1.1.0")
 
     from os import path
     recipes_dir = path.dirname(path.abspath(__file__))
