@@ -82,7 +82,7 @@ class NaClToolchain(UnixToolchain):
     def write_variables(self, ninja):
         super(NaClToolchain, self).write_variables(ninja)
 
-        ninja.variable("includes", "-I" + self.pepper_include_dir)
+        ninja.variable("includes", "-isystem " + self.pepper_include_dir)
         ninja.variable("lddirs", "-L" + self.pepper_lib_dir)
 
         if self.target.is_pnacl:
