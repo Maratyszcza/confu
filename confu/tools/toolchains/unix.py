@@ -16,7 +16,7 @@ class UnixToolchain(Toolchain):
         self.cflags = ["-std=gnu99", "-g"]
         self.cxxflags = ["-std=gnu++0x" if self.target == "x86_64-nacl-gnu" else "-std=gnu++11", "-g"]
         self.ldflags = []
-        self.optflag = "-O3"
+        self.optflag = "-O2"
         if self.target.is_glibc:
             self.cflags.append("-pthread")
             self.cxxflags.append("-pthread")
