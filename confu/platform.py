@@ -119,7 +119,7 @@ class Platform:
         elif self.is_asmjs:
             return ".asm.js"
         elif self.is_wasm:
-            return ".wasm"
+            return ".js"
         elif self.is_windows:
             return ".exe"
         else:
