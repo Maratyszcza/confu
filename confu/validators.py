@@ -69,6 +69,19 @@ def validate_source_path(source_path, source_dir):
     return source_path
 
 
+def validate_source_paths(source_paths, source_dir):
+    import collections
+    if isinstance(source_paths, str):
+        return [validate_source_path(source_paths, source_dir)]
+    elif isinstance(source_paths, collections.Mapping):
+        return sum((validate_source_paths(source_paths_collection, source_dir)
+            for source_paths_collection, platform_match in six.iteritems(source_paths) if platform_match), list())
+    elif isinstance(source_paths, collections.Iterable):
+        return [validate_source_path(source_path, source_dir) for source_path in source_paths]
+    else:
+        raise TypeError("Invalid type of source paths: string, mapping, or iterable expected")
+
+
 def validate_export_function(name):
     if not isinstance(name, str):
         raise TypeError("Invalid type of function name: string expected")

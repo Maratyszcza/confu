@@ -5,7 +5,7 @@ from confu.results import CompilationResult
 
 
 class CollectionResult(BuildResult):
-    def __init__(self, subdir, name, objects, libraries=None, filename=None, rule=None, variables=dict()):
+    def __init__(self, subdir, name, objects, libraries=None, filename=None, rule=None, extra_deps=list(), variables=dict()):
         super(CollectionResult, self).__init__()
         if not isinstance(subdir, str):
             raise TypeError("Unsupported type of subdir argument: string expected")
@@ -26,6 +26,7 @@ class CollectionResult(BuildResult):
         self.objects = objects
         self.libraries = libraries
         self.rule = rule
+        self.extra_deps = extra_deps
         self.variables = variables
 
     def get_target_path(self):
@@ -47,7 +48,7 @@ class CollectionResult(BuildResult):
                 object_files.append(object.get_target_path())
 
         library_files = list()
-        implicit_deps = list()
+        implicit_deps = list(self.extra_deps)
         if self.libraries:
             for library in self.libraries:
                 assert isinstance(library, (CollectionResult, str))
