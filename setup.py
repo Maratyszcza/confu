@@ -28,4 +28,4 @@ setup(
         "Topic :: Software Development :: Build Tools"
     ],
     setup_requires=["six"],
-    install_requires=["six", "pygit2", "ninja_syntax>=1.7.2"])
+    install_requires=["six", "PyYAML", "ninja_syntax>=1.7.2"])

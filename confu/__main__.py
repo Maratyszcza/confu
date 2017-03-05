@@ -8,8 +8,6 @@ logger = logging.getLogger("confu")
 
 
 def setup_deps(options, unparsed_args):
-    import pygit2
-
     import confu.recipes
     import types
     builtin_recipes = [name for name in confu.recipes.__dict__
