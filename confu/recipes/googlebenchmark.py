@@ -28,6 +28,7 @@ def main(args, root_dir=None):
         "commandlineflags.cc",
         "complexity.cc",
         "console_reporter.cc",
+        "counter.cc",
         "csv_reporter.cc",
         "json_reporter.cc",
         "reporter.cc",
