@@ -132,6 +132,9 @@ class Build(State):
         import confu.globals
         confu.globals.build_ninja_path = os.path.join(self.root_dir, "build.ninja")
         with open(confu.globals.build_ninja_path, "w") as build_ninja:
+            # Minimal version with implicit outputs support
+            build_ninja.write("ninja_required_version = 1.7\n")
+
             ninja = ninja_syntax.Writer(build_ninja)
             self.generate_variables(ninja)
             self.generate_rules(ninja)
