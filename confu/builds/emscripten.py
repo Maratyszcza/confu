@@ -25,18 +25,20 @@ class EmscriptenBuild(UnixBuild):
                 "linker": "$cxx", "emflags": " ".join(emflags)})
         return executable
 
-    def plugin(self, name, object_files, functions=None, memory_size=None, aborting_malloc=True, no_exit_runtime=True, include_filesystem=None,
+    def plugin(self, name, object_files, functions=None, memory_size=None, aborting_malloc=True, no_exit_runtime=True, memory_init_file=False, include_filesystem=None,
             pre_js=None, post_js=None):
 
         if not isinstance(object_files, (list, tuple)):
             object_files = [object_files]
-        emflags = [
-            "$emflags",
-            "--memory-init-file", "0",
-        ]
+        emflags = ["$emflags"]
+
+        if not memory_init_file:
+            emflags += ["--memory-init-file", "0"]
+
         if self.target.is_wasm:
             emflags += ["-s", "BINARYEN_METHOD=\\\"native-wasm\\\""]
-            emflags += ["-s", "BINARYEN_IMPRECISE=1"]
+            emflags += ["-s", "BINARYEN_IGNORE_IMPLICIT_TRAPS=1"]
+            emflags += ["-s", "BINARYEN_TRAP_MODE=\\\"allow\\\""]
         else:
             emflags += ["-s", "PRECISE_F32=2"]
 
