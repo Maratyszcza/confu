@@ -5,7 +5,7 @@ from confu.results import CompilationResult
 
 
 class CollectionResult(BuildResult):
-    def __init__(self, subdir, name, objects, libraries=None, filename=None, rule=None, extra_deps=list(), variables=dict()):
+    def __init__(self, subdir, name, objects, libraries=None, filename=None, rule=None, extra_outputs=list(), extra_deps=list(), variables=dict()):
         super(CollectionResult, self).__init__()
         if not isinstance(subdir, str):
             raise TypeError("Unsupported type of subdir argument: string expected")
@@ -26,6 +26,7 @@ class CollectionResult(BuildResult):
         self.objects = objects
         self.libraries = libraries
         self.rule = rule
+        self.extra_outputs = extra_outputs
         self.extra_deps = extra_deps
         self.variables = variables
 
@@ -64,7 +65,10 @@ class CollectionResult(BuildResult):
         variables["path"] = os.path.join(self.subdir, self.filename)
         variables["ldlibs"] = " ".join(library_files)
         ninja.build(target_path, self.rule, object_files,
-            implicit=implicit_deps, order_only=confu.globals.build_ninja_path, variables=variables)
+                    implicit=implicit_deps,
+                    implicit_outputs=[os.path.join(confu.globals.root_dir, self.subdir, extra_output)
+                                      for extra_output in self.extra_outputs],
+                    order_only=confu.globals.build_ninja_path, variables=variables)
 
         self.generated = True
         return target_path

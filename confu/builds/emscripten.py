@@ -31,14 +31,19 @@ class EmscriptenBuild(UnixBuild):
         if not isinstance(object_files, (list, tuple)):
             object_files = [object_files]
         emflags = ["$emflags"]
+        filename = name + self.target.executable_ext
 
+        extra_outputs = list()
         if not memory_init_file:
             emflags += ["--memory-init-file", "0"]
+        else:
+            extra_outputs.append(filename + ".mem")
 
         if self.target.is_wasm:
             emflags += ["-s", "BINARYEN_METHOD=\\\"native-wasm\\\""]
             emflags += ["-s", "BINARYEN_IGNORE_IMPLICIT_TRAPS=1"]
             emflags += ["-s", "BINARYEN_TRAP_MODE=\\\"allow\\\""]
+            extra_outputs.append(name + ".wasm")
         else:
             emflags += ["-s", "PRECISE_F32=2"]
 
@@ -78,8 +83,8 @@ class EmscriptenBuild(UnixBuild):
                 emflags += ["--post-js", js_path]
 
         plugin = CollectionResult("out", name, object_files,
-            libraries=self._deps_libraries, filename=name + self.target.executable_ext,
-            rule="executable", extra_deps=extra_deps, variables={
+            libraries=self._deps_libraries, filename=filename,
+            rule="executable", extra_outputs=extra_outputs, extra_deps=extra_deps, variables={
                 "linker": "$cxx", "emflags": " ".join(emflags)})
         self.active_module.plugins.append(plugin)
         return plugin
