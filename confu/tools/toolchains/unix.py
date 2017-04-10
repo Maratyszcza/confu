@@ -58,7 +58,6 @@ class UnixToolchain(Toolchain):
                 emscripten_linker_flags = "$optflags $emflags "
         ninja.rule("executable", "$linker {emscripten_flags}$ldflags $lddirs -o $out $in $ldlibs"
                    .format(emscripten_flags=emscripten_linker_flags),
-                   deps="gcc", depfile="$out.d",
                    description="LINK $path")
 
         if write_library:
