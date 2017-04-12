@@ -134,6 +134,10 @@ class Platform:
         return self.arch in ["ppc64", "ppc64le"]
 
     @property
+    def is_arm(self):
+        return self.arch == "arm"
+
+    @property
     def is_pnacl(self):
         return self.arch == "pnacl"
 

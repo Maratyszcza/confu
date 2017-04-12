@@ -54,6 +54,8 @@ class UnixBuild(Build):
                 include_dirs += dep.cpath
         if include_dirs:
             variables["includes"] = "$includes " + " ".join("-I" + include_dir for include_dir in include_dirs)
+        if self._isa:
+            variables["optflags"] = "$optflags " + self._isa.cflags
         if self._macros:
             from confu.utils import format_macro
             variables["macro"] = " ".join(format_macro(name, self._macros[name]) for name in sorted(self._macros))

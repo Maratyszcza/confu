@@ -2,10 +2,12 @@ from __future__ import absolute_import
 
 import six
 
+from confu.isa import InstructionSet, InstructionSets
+
 
 class OptionsContextManager:
     def __init__(self, state, source_dir=None, include_dirs=None, extra_include_dirs=None,
-            macros=None, extra_macros=None, deps=None, libs=None):
+            macros=None, extra_macros=None, isa=None, deps=None, libs=None):
 
         assert isinstance(state, State)
         assert include_dirs is None or extra_include_dirs is None
@@ -25,6 +27,9 @@ class OptionsContextManager:
         elif isinstance(extra_macros, (list, tuple)):
             extra_macros = {macro: None for macro in extra_macros}
 
+        if isa is not None and not isinstance(isa, (InstructionSet, InstructionSets)):
+            raise TypeError("Invalid isa type; InstructionSet or InstructionSets expected")
+
         if deps is not None and not isinstance(deps, list):
             deps = [deps]
 
@@ -34,12 +39,14 @@ class OptionsContextManager:
         self.extra_include_dirs = extra_include_dirs
         self.macros = macros
         self.extra_macros = extra_macros
+        self.isa = isa
         self.deps = deps
         self.libs = libs
 
         self._saved_source_dir = None
         self._saved_include_dirs = None
         self._saved_macros = None
+        self._saved_isa = None
         self._saved_deps = None
         self._saved_libs = None
 
@@ -64,6 +71,10 @@ class OptionsContextManager:
             for key, value in six.iteritems(self.extra_macros):
                 self.state.add_macro(key, value)
 
+        self._saved_isa = self.state._isa
+        if self.isa is not None:
+            self.state._isa = InstructionSets(self.isa)
+
         self._saved_deps = self.state._deps
         if self.deps is not None:
             self.state._deps = self.deps
@@ -77,6 +88,7 @@ class OptionsContextManager:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.state._source_dir = self._saved_source_dir
         self.state._include_dirs = self._saved_include_dirs
+        self.state._isa = self._saved_isa
         self.state._deps = self._saved_deps
         self.state._libs = self._saved_libs
 
@@ -89,11 +101,12 @@ class State(object):
         self._macros = dict()
         self._source_dir = root_dir
         self._include_dirs = list()
+        self._isa = InstructionSets()
         self._deps = list()
         self._libs = list()
 
     def options(self, source_dir=None, include_dirs=None, extra_include_dirs=None,
-            macros=None, extra_macros=None, deps=None, libs=None):
+            macros=None, extra_macros=None, isa=None, deps=None, libs=None):
         
         if include_dirs is not None and extra_include_dirs is not None:
             raise ValueError("At most one of include_dirs, extra_include_dirs arguments can be provided")
@@ -108,6 +121,10 @@ class State(object):
             from confu.validators import validate_include_dirs
             extra_include_dirs = validate_include_dirs(extra_include_dirs, self.root_dir)
 
+        if isa is not None:
+            if not isinstance(isa, (InstructionSet, InstructionSets)):
+                raise TypeError("Invalid isa type; expected InstructionSet or InstructionSets")
+
         if deps is not None:
             from confu.validators import validate_dependencies
             deps = validate_dependencies(deps, self)
@@ -116,7 +133,7 @@ class State(object):
             source_dir=source_dir,
             include_dirs=include_dirs, extra_include_dirs=extra_include_dirs,
             macros=macros, extra_macros=extra_macros,
-            deps=deps)
+            isa=isa, deps=deps, libs=libs)
 
     @property
     def root_dir(self):
