@@ -41,6 +41,8 @@ class DependencyCollection:
                     from importlib import reload  # Python 3.4+
                 elif sys.version_info >= (3, 0):
                     from imp import reload        # Python 3.0 - 3.3
+                else:
+                    global reload
 
                 reload(configure)
                 config = configure.main(["--target", self._target])
