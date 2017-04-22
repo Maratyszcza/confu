@@ -1,3 +1,4 @@
+import sys
 import os
 import logging
 
@@ -35,6 +36,12 @@ class DependencyCollection:
             sys.path.insert(0, dep_dir)
             try:
                 import configure
+
+                if sys.version_info >= (3, 4):
+                    from importlib import reload  # Python 3.4+
+                elif sys.version_info >= (3, 0):
+                    from imp import reload        # Python 3.0 - 3.3
+
                 reload(configure)
                 config = configure.main(["--target", self._target])
                 config.modules._sealed = True
