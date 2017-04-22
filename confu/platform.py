@@ -33,6 +33,7 @@ class Platform:
                  - "x86_64-linux-gnux32"
                  - "ppc64le-linux-gnu"
                  - "arm-linux-gnueabihf"
+                 - "aarch64-linux-gnu"
                  - "x86_64-macos"
                  - "x86_64-nacl-gnu"
                  - "x86_64-nacl-newlib"
@@ -49,6 +50,8 @@ class Platform:
                           - "x86_64-linux" (same as "x86_64-linux-gnu")
                           - "ppc64le-linux" (same as "ppc64le-linux-gnu")
                           - "arm-linux" (same as "arm-linux-gnueabihf")
+                          - "arm64-linux" (same as "aarch64-linux-gnu")
+                          - "aarch64-linux" (same as "aarch64-linux-gnu")
                           - "x32" (same as "x86_64-linux-gnux32")
                           - "x86_64-nacl" (same as "x86_64-nacl-newlib")
                           - "pnacl" (same as "pnacl-nacl-newlib")
@@ -138,6 +141,10 @@ class Platform:
         return self.arch == "arm"
 
     @property
+    def is_arm64(self):
+        return self.arch in ["arm64", "aarch64"]
+
+    @property
     def is_pnacl(self):
         return self.arch == "pnacl"
 
@@ -185,14 +192,20 @@ class Platform:
 
 def detect_host():
     x86_64_machines = ["x86_64", "amd64"]
+    x86_machines = ["i386", "i686"]
     arm_machines = ["armv6l", "armv7l"]
+    arm64_machines = ["aarch64"]
     import platform
     machine = platform.machine()
     if sys.platform.startswith("linux"):
         if machine in x86_64_machines:
             return "x86_64-linux-gnu"
+        elif machine in x86_machines:
+            return "x86-linux-gnu"
         elif machine in arm_machines:
             return "arm-linux-gnueabihf"
+        elif machine in arm64_machines:
+            return "aarch64-linux-gnu"
         elif machine == "ppc64le":
             return "ppc64le-linux-gnu"
     elif sys.platform == "darwin":

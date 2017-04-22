@@ -165,6 +165,7 @@ platform_alternatives = {
     "x86_64-linux-gnux32": ["x32", "linux-x32"],
     "ppc64le-linux-gnu": ["ppc64le-linux"],
     "arm-linux-gnueabihf": ["arm-linux", "linux-gnueabihf"],
+    "aarch64-linux-gnu": ["arm64-linux", "aarch64-linux"],
     "x86_64-macos": [],
     "x86_64-nacl-gnu": [],
     "x86_64-nacl-newlib": ["x86_64-nacl"],
