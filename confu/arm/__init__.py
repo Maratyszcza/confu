@@ -1,1 +1,1 @@
-from confu.arm.isa import neon
+from confu.arm.isa import neon, fp16, fma

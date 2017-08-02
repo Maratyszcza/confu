@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import six
 
-from confu.isa import InstructionSet, InstructionSets
+from confu.isa import InstructionSet
 
 
 class OptionsContextManager:
@@ -27,8 +27,8 @@ class OptionsContextManager:
         elif isinstance(extra_macros, (list, tuple)):
             extra_macros = {macro: None for macro in extra_macros}
 
-        if isa is not None and not isinstance(isa, (InstructionSet, InstructionSets)):
-            raise TypeError("Invalid isa type; InstructionSet or InstructionSets expected")
+        if isa is not None and not isinstance(isa, InstructionSet):
+            raise TypeError("Invalid isa type; InstructionSet expected")
 
         if deps is not None and not isinstance(deps, list):
             deps = [deps]
@@ -73,7 +73,7 @@ class OptionsContextManager:
 
         self._saved_isa = self.state._isa
         if self.isa is not None:
-            self.state._isa = InstructionSets(self.isa)
+            self.state._isa = self.isa
 
         self._saved_deps = self.state._deps
         if self.deps is not None:
@@ -101,7 +101,7 @@ class State(object):
         self._macros = dict()
         self._source_dir = root_dir
         self._include_dirs = list()
-        self._isa = InstructionSets()
+        self._isa = InstructionSet()
         self._deps = list()
         self._libs = list()
 
@@ -122,8 +122,8 @@ class State(object):
             extra_include_dirs = validate_include_dirs(extra_include_dirs, self.root_dir)
 
         if isa is not None:
-            if not isinstance(isa, (InstructionSet, InstructionSets)):
-                raise TypeError("Invalid isa type; expected InstructionSet or InstructionSets")
+            if not isinstance(isa, InstructionSet):
+                raise TypeError("Invalid isa type; InstructionSet expected")
 
         if deps is not None:
             from confu.validators import validate_dependencies
