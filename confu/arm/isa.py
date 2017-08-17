@@ -8,21 +8,27 @@ def _generate_flags(tags, compiler):
 	if "neon" in tags:
 		if "fma" in tags:
 			flags.append("-mfpu=neon-vfpv4")
+			flags.append("-mfp16-format=ieee")
 		elif "fp16" in tags:
 			flags.append("-mfpu=neon-fp16")
+			flags.append("-mfp16-format=ieee")
 		else:
 			flags.append("-mfpu=neon")
 	elif "d32" in tags:
 		if "fma" in tags:
-			flags.append("vfpv4")
+			flags.append("-mfpu=vfpv4")
+			flags.append("-mfp16-format=ieee")
 		elif "fp16" in tags:
-			flags.append("vfpv3-fp16")
+			flags.append("-mfpu=vfpv3-fp16")
+			flags.append("-mfp16-format=ieee")
 		else:
 			flags.append("vfpv3")
 	elif "fma" in tags:
-		flags.append("vfpv4-d16")
+		flags.append("-mfpu=vfpv4-d16")
+		flags.append("-mfp16-format=ieee")
 	elif "fp16" in tags:
-		flags.append("vfpv4-fp16")
+		flags.append("-mfpu=vfpv4-fp16")
+		flags.append("-mfp16-format=ieee")
 	return flags
 
 
