@@ -33,6 +33,7 @@ def main(args, root_dir=None):
         "json_reporter.cc",
         "reporter.cc",
         "sleep.cc",
+        "statistics.cc",
         "string_util.cc",
         "sysinfo.cc",
         "timers.cc",
