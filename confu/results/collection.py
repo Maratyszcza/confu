@@ -63,7 +63,7 @@ class CollectionResult(BuildResult):
         target_path = self.get_target_path()
         variables = self.variables.copy()
         variables["path"] = os.path.join(self.subdir, self.filename)
-        variables["ldlibs"] = " ".join(library_files)
+        variables["ldlibs"] = " ".join(library_files + ["$ldlibs"])
         ninja.build(target_path, self.rule, object_files,
                     implicit=implicit_deps,
                     implicit_outputs=[os.path.join(confu.globals.root_dir, self.subdir, extra_output)

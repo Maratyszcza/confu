@@ -47,7 +47,7 @@ class Build(State):
         if options.target.is_emscripten:
             from confu.builds import EmscriptenBuild
             return EmscriptenBuild(root_dir, options.target, options.toolchain)
-        elif options.target == host or options.target.is_nacl:
+        elif options.target == host or options.target.is_nacl or options.target.is_android:
             from confu.builds import UnixBuild, PNaClBuild
             if options.target.is_pnacl:
                 return PNaClBuild(root_dir, options.target, options.toolchain)

@@ -14,6 +14,9 @@ class UnixBuild(Build):
         elif self.target.is_emscripten:
             from confu.tools.toolchains import EmscriptenToolchain
             self.toolchain = EmscriptenToolchain(target, toolchain)
+        elif self.target.is_android:
+            from confu.tools.toolchains import AndroidToolchain
+            self.toolchain = AndroidToolchain(target, toolchain)
         else:
             from confu.tools.toolchains import UnixToolchain
             self.toolchain = UnixToolchain(target)

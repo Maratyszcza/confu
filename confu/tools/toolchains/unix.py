@@ -16,6 +16,7 @@ class UnixToolchain(Toolchain):
         self.cflags = ["-std=gnu99", "-g"]
         self.cxxflags = ["-std=gnu++0x" if self.target == "x86_64-nacl-gnu" else "-std=gnu++11", "-g"]
         self.ldflags = []
+        self.ldlibs = []
         self.optflag = "-O2"
         if self.target.is_glibc:
             self.cflags.append("-pthread")
@@ -39,6 +40,7 @@ class UnixToolchain(Toolchain):
         ninja.variable("cflags", " ".join(self.cflags))
         ninja.variable("cxxflags", " ".join(self.cxxflags))
         ninja.variable("ldflags", " ".join(self.ldflags))
+        ninja.variable("ldlibs", " ".join(self.ldlibs))
         ninja.variable("optflags", self.optflag)
 
     def write_rules(self, ninja, write_library=True, write_run=True):

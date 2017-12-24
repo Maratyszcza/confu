@@ -129,6 +129,10 @@ class Platform:
             return ""
 
     @property
+    def is_x86(self):
+        return self.arch == "x86"
+
+    @property
     def is_x86_64(self):
         return self.arch == "x86_64"
 
@@ -159,6 +163,10 @@ class Platform:
     @property
     def is_linux(self):
         return self.os == "linux"
+
+    @property
+    def is_android(self):
+        return self.os == "android"
 
     @property
     def is_macos(self):
@@ -233,6 +241,13 @@ if host is None:
 
 def detect_possible_targets():
     targets = [host.name]
+    if os.getenv("ANDROID_SDK") is not None and os.getenv("ANDROID_NDK") is not None:
+        targets.append("arm-android")
+        targets.append("arm-android-v7a")
+        targets.append("aarch64-android")
+        targets.append("aarch64-android-v8a")
+        targets.append("x86-android")
+        targets.append("x86_64-android")
     if host.is_x86_64:
         if os.getenv("NACL_SDK_ROOT") is not None:
             targets.append("pnacl")
