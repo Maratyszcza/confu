@@ -35,6 +35,10 @@ class Platform:
                  - "arm-linux-gnueabihf"
                  - "aarch64-linux-gnu"
                  - "x86_64-macos"
+                 - "arm-android-v7a"
+                 - "aarch64-android-v8a"
+                 - "x86-android"
+                 - "x86_64-android"
                  - "x86_64-nacl-gnu"
                  - "x86_64-nacl-newlib"
                  - "pnacl-nacl-newlib"
@@ -53,6 +57,8 @@ class Platform:
                           - "arm64-linux" (same as "aarch64-linux-gnu")
                           - "aarch64-linux" (same as "aarch64-linux-gnu")
                           - "x32" (same as "x86_64-linux-gnux32")
+                          - "arm-android" (same as "arm-android-v7a")
+                          - "aarch64-android" (same as "aarch64-android-v8a")
                           - "x86_64-nacl" (same as "x86_64-nacl-newlib")
                           - "pnacl" (same as "pnacl-nacl-newlib")
                           - "asmjs" (same as "asmjs-emscripten")
