@@ -44,11 +44,11 @@ class UnixToolchain(Toolchain):
         ninja.variable("optflags", self.optflag)
 
     def write_rules(self, ninja, write_library=True, write_run=True):
-        ninja.rule("cc", "$cc -o $out -c $in -MMD -MF $out.d $optflags $cflags $macro $includes",
+        ninja.rule("cc", "$cc -o $out -c $in -MMD -MF $out.d $cflags $optflags $macro $includes",
                    deps="gcc", depfile="$out.d",
                    description="CC $path")
 
-        ninja.rule("cxx", "$cxx -o $out -c $in -MMD -MF $out.d $optflags $cxxflags $macro $includes",
+        ninja.rule("cxx", "$cxx -o $out -c $in -MMD -MF $out.d $cxxflags $optflags $macro $includes",
                    deps="gcc", depfile="$out.d",
                    description="CXX $path")
 
