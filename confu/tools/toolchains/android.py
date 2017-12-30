@@ -141,6 +141,8 @@ class AndroidToolchain(UnixToolchain):
             if toolchain == "clang":
                 mflags.append("-fno-integrated-as")
             self.ldflags.append("-Wl,--fix-cortex-a8")
+        elif target == "aarch64-android-v8a":
+            mflags = []
         elif target == "x86-android":
             # http://b.android.com/222239
             # http://b.android.com/220159 (internal http://b/31809417)
