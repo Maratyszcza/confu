@@ -167,7 +167,7 @@ platform_alternatives = {
     "arm-linux-gnueabihf": ["arm-linux", "linux-gnueabihf"],
     "aarch64-linux-gnu": ["arm64-linux", "aarch64-linux"],
     "arm-android-v7a": ["arm-android"],
-    "aarch64-android-v8a": ["aarch64-android"],
+    "aarch64-android-v8a": ["arm64-android", "arm64-android-v8a", "aarch64-android"],
     "x86_64-android": [],
     "x86-android": [],
     "x86_64-macos": [],
