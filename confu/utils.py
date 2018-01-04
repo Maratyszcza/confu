@@ -19,3 +19,15 @@ def format_macro(name, value):
         return "-D" + name
     else:
         return "-D" + name + "=" + str(value)
+
+
+def qualified_type(var):
+    if var is None:
+        return "None"
+    else:
+        module = var.__class__.__module__
+        type = var.__class__.__name__
+        if module is None or module == "__builtin__":
+            return type
+        else:
+            return module + "." + type

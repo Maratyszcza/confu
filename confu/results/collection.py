@@ -1,7 +1,9 @@
 import os
+import collections
 
 from confu.results import BuildResult
 from confu.results import CompilationResult
+from confu.utils import qualified_type
 
 
 class CollectionResult(BuildResult):
@@ -14,12 +16,14 @@ class CollectionResult(BuildResult):
                 subdir=subdir))
         if not isinstance(name, str):
             raise TypeError("Unsupported type of name argument: string expected")
-        if not isinstance(objects, (list, tuple)):
-            raise TypeError("Unsupported type of objects argument: list or tuple expected")
-        for i, object in enumerate(objects):
-            if not isinstance(object, (CompilationResult, CollectionResult)):
-                raise TypeError("Unsupported type of object #{index}: CompilationResult expected".format(
-                    index=i))
+        if not isinstance(objects, collections.Iterable):
+            raise TypeError("Unsupported type of objects argument: list, tuple, or iterable expected")
+        if not isinstance(objects, list):
+            objects = list(objects)
+        for i, obj in enumerate(objects):
+            if not isinstance(obj, (CompilationResult, CollectionResult)):
+                raise TypeError("Unsupported type {type} of object #{index}: CompilationResult expected".format(
+                    type=qualified_type(obj), index=i))
         self.subdir = subdir
         self.name = name
         self.filename = filename if filename is not None else name

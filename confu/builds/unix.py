@@ -1,5 +1,6 @@
 import os
 import six
+import collections
 
 from confu.builds import Build
 from confu.results import CompilationResult, CollectionResult
@@ -88,7 +89,7 @@ class UnixBuild(Build):
         return libraries
 
     def static_library(self, name, object_files):
-        if not isinstance(object_files, (list, tuple)):
+        if not isinstance(object_files, collections.Iterable):
             object_files = [object_files]
         library = CollectionResult("lib", name, object_files,
             filename=self.target.get_static_library_filename(name),
@@ -97,7 +98,7 @@ class UnixBuild(Build):
         return library
 
     def _executable(self, name, object_files):
-        if not isinstance(object_files, (list, tuple)):
+        if not isinstance(object_files, collections.Iterable):
             object_files = [object_files]
         executable_object = CollectionResult("bin", name, object_files,
             filename=name + self.target.executable_ext,
@@ -107,7 +108,7 @@ class UnixBuild(Build):
 
     def plugin(self, name, object_files):
         if self.target.is_nacl:
-            if not isinstance(object_files, (list, tuple)):
+            if not isinstance(object_files, collections.Iterable):
                 object_files = [object_files]
             plugin_object = CollectionResult("out", name, object_files,
                 filename=name + self.target.executable_ext,
