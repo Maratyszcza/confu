@@ -52,6 +52,10 @@ def setup_deps(options, unparsed_args):
                     name=qualified_name, url=dep.url))
                 import confu.git
                 confu.git.clone(dep.url, dep_dir)
+            elif dep.dir is not None:
+                logger.info("link dependency {name} from {path}".format(
+                    name=qualified_name, path=os.path.join(project_dir, dep.dir)))
+                os.symlink(os.path.join(project_dir, dep.dir), dep_dir)
             elif dep.name in builtin_recipes:
                 logger.info("setup dependency {name} using built-in recipe confu.recipes.{name}"
                     .format(name=qualified_name))

@@ -9,6 +9,7 @@ class Dependency:
     def __init__(self, yaml_dict):
         self.name = yaml_dict["name"]
         self.url = yaml_dict.get("url")
+        self.dir = yaml_dict.get("dir")
 
 
 class Project:
