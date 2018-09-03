@@ -1,15 +1,16 @@
 from confu.isa import InstructionSet
 
 _isa_subsets = {
-	"avx2": ["sse3", "ssse3", "sse4.1", "sse4.2", "avx", "fma3", "f16c"],
-	"fma4": ["sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
-	"fma3": ["sse3", "ssse3", "sse4.1", "sse4.2", "avx", "f16c"],
-	"xop": ["sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
-	"f16c": ["sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
-	"avx": ["sse3", "ssse3", "sse4.1", "sse4.2"],
-	"sse4.2": ["sse3", "ssse3", "sse4.1"],
-	"sse4.1": ["sse3", "ssse3"],
-	"ssse3": ["sse3"],
+	"avx2": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2", "avx", "fma3", "f16c"],
+	"fma4": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
+	"fma3": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2", "avx", "f16c"],
+	"xop": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
+	"f16c": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2", "avx"],
+	"avx": ["sse2", "sse3", "ssse3", "sse4.1", "sse4.2"],
+	"sse4.2": ["sse2", "sse3", "ssse3", "sse4.1"],
+	"sse4.1": ["sse2", "sse3", "ssse3", "sse2"],
+	"ssse3": ["sse2", "sse3"],
+	"sse3": ["sse2"],
 }
 
 def _remove_isa_subset(tags, isa):
@@ -50,6 +51,9 @@ def _generate_simd_flags(tags, compiler):
 	if "sse3" in tags:
 		flags.append("-msse3")
 		_remove_isa_subset(tags, "sse3")
+	if "sse2" in tags:
+		flags.append("-msse2")
+		_remove_isa_subset(tags, "sse2")
 	return flags
 
 def _generate_crypto_flags(tags, compiler):
@@ -76,6 +80,7 @@ def _generate_scalar_flags(tags, compiler):
 		flags.append("-mlzcnt")
 	return flags
 
+sse2 = InstructionSet("sse2", generate_flags_fn=_generate_simd_flags)
 sse3 = InstructionSet("sse3", generate_flags_fn=_generate_simd_flags)
 ssse3 = InstructionSet("ssse3", generate_flags_fn=_generate_simd_flags)
 sse4_1 = InstructionSet("sse4.1", generate_flags_fn=_generate_simd_flags)
