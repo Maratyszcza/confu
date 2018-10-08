@@ -23,7 +23,10 @@ def main(args, root_dir=None):
 
     source_files = [
         "benchmark.cc",
+        "benchmark_api_internal.cc",
+        "benchmark_main.cc",
         "benchmark_register.cc",
+        "benchmark_runner.cc",
         "colorprint.cc",
         "commandlineflags.cc",
         "complexity.cc",
