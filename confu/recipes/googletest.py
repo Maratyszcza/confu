@@ -4,7 +4,7 @@
 def setup(root_dir):
     import confu.git
     repo = confu.git.clone("https://github.com/google/googletest.git", root_dir)
-    repo.checkout("refs/tags/release-1.8.0")
+    repo.checkout("refs/tags/release-1.10.0")
 
     from os import path
     recipes_dir = path.dirname(path.abspath(__file__))
