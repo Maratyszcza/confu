@@ -29,6 +29,7 @@ class PeachPy(Tool):
     def _record_rules(self, ninja):
     	abi, imageformat = {
     		"x86_64-linux-gnu":   ("sysv", "elf"),
+    		"x86_64-freebsd":     ("sysv", "elf"),
     		"x86_64-macos":       ("sysv", "mach-o"),
     		"x86_64-nacl-newlib": ("nacl", "elf"),
     		"x86_64-nacl-gnu":    ("nacl", "elf"),

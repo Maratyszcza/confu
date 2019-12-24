@@ -28,6 +28,9 @@ class UnixBuild(Build):
             elif confu.platform.host.is_macos and toolchain == "auto" or toolchain == "clang":
                 self.toolchain.cc = "clang"
                 self.toolchain.cxx = "clang++"
+            elif confu.platform.host.is_freebsd and toolchain == "auto" or toolchain == "clang":
+                self.toolchain.cc = "clang"
+                self.toolchain.cxx = "clang++"
             self.toolchain.ar = "ar"
             self.toolchain.ranlib = "ranlib"
             self.toolchain.strip = "strip"
