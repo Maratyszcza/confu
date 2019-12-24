@@ -140,7 +140,7 @@ class Platform:
 
     @property
     def is_x86_64(self):
-        return self.arch == "x86_64"
+        return self.arch in ["x86_64", "amd64"]
 
     @property
     def is_ppc64(self):
@@ -173,6 +173,10 @@ class Platform:
     @property
     def is_android(self):
         return self.os == "android"
+
+    @property
+    def is_freebsd(self):
+        return self.os == "freebsd"
 
     @property
     def is_macos(self):
@@ -228,6 +232,9 @@ def detect_host():
     elif sys.platform == "win32":
         if machine in x86_64_machines:
             return "x86_64-windows"
+    elif sys.platform.startswith("freebsd"):
+        if machine in x86_64_machines:
+            return "x86_64-freebsd"
     else:
         logging.critical("failed to detect the host platform: "
                          "sys.platform = {sys.platform}".format(sys=sys))

@@ -171,6 +171,7 @@ platform_alternatives = {
     "x86_64-android": [],
     "x86-android": [],
     "x86_64-macos": [],
+    "x86_64-freebsd": [],
     "x86_64-nacl-gnu": [],
     "x86_64-nacl-newlib": ["x86_64-nacl"],
     "pnacl-nacl-newlib": ["pnacl", "pnacl-nacl", "pnacl-newlib"],

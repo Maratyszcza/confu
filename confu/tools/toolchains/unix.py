@@ -18,7 +18,7 @@ class UnixToolchain(Toolchain):
         self.ldflags = []
         self.ldlibs = []
         self.optflag = "-O2"
-        if self.target.is_glibc:
+        if self.target.is_glibc or self.target.is_freebsd:
             self.cflags.append("-pthread")
             self.cxxflags.append("-pthread")
             self.ldflags.append("-pthread")
