@@ -13,7 +13,7 @@ class UnixToolchain(Toolchain):
         self.strip = None
         self.objcopy = None
 
-        self.cflags = ["-std=gnu99", "-g"]
+        self.cflags = ["-std=gnu99" if self.target.is_nacl or self.target.is_pnacl else "-std=gnu11", "-g"]
         self.cxxflags = ["-std=gnu++0x" if self.target == "x86_64-nacl-gnu" else "-std=gnu++11", "-g"]
         self.ldflags = []
         self.ldlibs = []
